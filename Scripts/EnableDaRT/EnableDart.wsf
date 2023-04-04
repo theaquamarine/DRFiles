@@ -23,6 +23,12 @@
 		tmpShell.RegWrite "HKCU\Console\ForceV2","0","REG_DWORD"
 	End if 
 
+	' Copy Dart config to the correct location if we have a copy and it's not already present
+	Dim dartConfigPath = tmpFSO.GetParentFolderName(WScript.ScriptFullName) & "\DartConfig8.dat"
+	If Not tmpFSO.FileExists(tmpShell.ExpandEnvironmentStrings("%WINDIR%\System32\DartConfig.dat")) And tmpFSO.FileExists(dartConfigPath) then
+		tmpFSO.CopyFile dartConfigPath, tmpShell.ExpandEnvironmentStrings("%WINDIR%\System32\DartConfig.dat")
+	End if
+
 	</script>
 	<script language="VBScript" src="ZTIUtility.vbs"/>
 	<script language="VBScript" src="ZTIDataAccess.vbs"/>
